@@ -7,4 +7,6 @@ class User < ApplicationRecord
   validates :username, presence: true, length: { minimum: 3 }
   validates :first_name, presence: true, length: { minimum: 3 }
   validates :last_name, presence: true, length: { minimum: 3 }
+
+  has_many :challenges
 end
