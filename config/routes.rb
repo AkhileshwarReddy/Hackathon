@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  root to: 'challenges#index'
+  get "challenge", to: "challenges#new"
+  post "challenge", to: "challenges#create"
+  get "challenges", to: "challenges#index"
+
+  get "search", to: "tags#search"
 end

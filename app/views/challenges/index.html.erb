@@ -1,0 +1,12 @@
+<% if user_signed_in? %>
+  <%= link_to "Create A Challenge", challenge_path, class: "button is-primary" %>
+<% end %>
+
+<div class="rows">
+  <% @challenges.each_with_index do |challenge, index| %>
+    <div class="row">
+      <p class="has-text-weight-bold"><%= index + 1 %>.&nbsp;<%= challenge.title %></p>
+      <
+    </div>
+  <% end %>
+</div>

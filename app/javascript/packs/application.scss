@@ -1,12 +1,6 @@
-@import '~bulma'
+@import '~bulma';
+@import '~easy-autocomplete/dist/easy-autocomplete';
 
-.autocomplete
-  position: relative
-  display: inline-block
-
-
-.autocomplete-items
-  position: absolute
-  cursor: pointer
-  border-bottom: 1px solid
-  
+.easy-autocomplete {
+  width: 100% !important;
+}
