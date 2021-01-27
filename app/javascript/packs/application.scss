@@ -1,0 +1,12 @@
+@import '~bulma'
+
+.autocomplete
+  position: relative
+  display: inline-block
+
+
+.autocomplete-items
+  position: absolute
+  cursor: pointer
+  border-bottom: 1px solid
+  
