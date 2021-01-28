@@ -12,17 +12,17 @@ module ChallengeServices
     end
 
     def call
-      begin
-        @challenge = Challenge.new(@params)
-        @challenge.save
+      @challenge = Challenge.new(@params)
+      raise ActiveRecord::RecordInvalid unless @challenge.save
 
-        create_tags
-        create_tagged_challenges
-      rescue StandardError => e
-        BaseService::Failure.new({ message: e.message })
-      else
-        BaseService::Success.new({ id: @challenge.id })
-      end
+      create_tags
+      create_tagged_challenges
+    rescue ActiveRecord::RecordInvalid => e
+      BaseService::Failure.new({ message: e.message })
+    rescue StandardError => e
+      BaseService::Failure.new({ message: e.message })
+    else
+      BaseService::Success.new({ id: @challenge.id })
     end
 
     private
