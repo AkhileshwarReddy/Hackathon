@@ -28,7 +28,7 @@ RSpec.describe 'Challenges', type: :request do
         challenge: {
           title: Faker::Lorem.sentence,
           description: Faker::Lorem.sentences(number: rand(5..20)).join(' '),
-          tags: [Faker::ProgrammingLanguage.name, Faker::ProgrammingLanguage.name]
+          tags: [Faker::ProgrammingLanguage.name, Faker::ProgrammingLanguage.name].join(', ')
         }
       }
 
