@@ -25,13 +25,17 @@
 
         <td><%= challenge.user.username %></td>
 
+        <% if challenge_tags(challenge).count > 0 %>
         <td>
           <div class="tags">
-            <% TaggedChallenge.tags(challenge).each do |tag| %>
+            <% challenge_tags(challenge).each do |tag| %>
               <span class="tag is-primary"><%= tag.name %></span>
             <% end %>
           </div>
         </td>
+        <% else %>
+        <td>-</td>
+        <% end %>
 
         <td>-</td>
 

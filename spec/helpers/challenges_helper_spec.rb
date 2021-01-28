@@ -11,5 +11,15 @@ require 'rails_helper'
 #   end
 # end
 RSpec.describe ChallengesHelper, type: :helper do
-  # pending "add some examples to (or delete) #{__FILE__}"
+  describe '#challenge_tags' do
+    let(:challenge) { create(:challenge) }
+    let(:tags) { create_list(:tag, rand(1..5)) }
+    let(:tagged_challenges) do
+      tags.map { |tag| TaggedChallenge.create(challenge: challenge, tag: tag) }
+    end
+
+    it 'should return challenge tags' do
+      # expect(challenge_tags(challenge)).to eq(tags)
+    end
+  end
 end

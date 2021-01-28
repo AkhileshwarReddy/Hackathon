@@ -9,4 +9,5 @@ class User < ApplicationRecord
   validates :last_name, presence: true, length: { minimum: 3 }
 
   has_many :challenges, dependent: :destroy
+  has_many :votes, dependent: :destroy
 end

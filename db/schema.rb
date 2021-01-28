@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_25_124704) do
+ActiveRecord::Schema.define(version: 2021_01_28_100303) do
 
   create_table "challenges", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title", null: false
@@ -51,7 +51,18 @@ ActiveRecord::Schema.define(version: 2021_01_25_124704) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "votes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "challenge_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["challenge_id"], name: "index_votes_on_challenge_id"
+    t.index ["user_id"], name: "index_votes_on_user_id"
+  end
+
   add_foreign_key "challenges", "users"
   add_foreign_key "tagged_challenges", "challenges"
   add_foreign_key "tagged_challenges", "tags"
+  add_foreign_key "votes", "challenges"
+  add_foreign_key "votes", "users"
 end
