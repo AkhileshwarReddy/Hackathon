@@ -2,11 +2,41 @@
   <%= link_to "Create A Challenge", challenge_path, class: "button is-primary" %>
 <% end %>
 
-<div class="rows">
+<table class="table">
+  <thead>
+    <tr>
+      <th class="is-uppercase">Ch. No</th>
+      <th class="is-uppercase">Challenge</th>
+      <th class="is-uppercase">Votes</th>
+      <th class="is-uppercase">Created By</th>
+      <th class="is-uppercase">Tags</th>
+      <th class="is-uppercase">Collaborators</th>
+      <th class="is-uppercase">Created At</th>
+    </tr>
+  </thead>
+  <tbody>
   <% @challenges.each_with_index do |challenge, index| %>
-    <div class="row">
-      <p class="has-text-weight-bold"><%= index + 1 %>.&nbsp;<%= challenge.title %></p>
-      <
-    </div>
+      <tr>
+        <th><%= index + 1 %></th>
+
+        <td class="has-text-weight-semibold"><%= challenge.title %></td>
+
+        <td>-</td>
+
+        <td><%= challenge.user.username %></td>
+
+        <td>
+          <div class="tags">
+            <% TaggedChallenge.tags(challenge).each do |tag| %>
+              <span class="tag is-primary"><%= tag.name %></span>
+            <% end %>
+          </div>
+        </td>
+
+        <td>-</td>
+
+        <td><%= time_ago_in_words(challenge.created_at) %></td>
+      </tr>
   <% end %>
-</div>
+  </tbody>
+</table>

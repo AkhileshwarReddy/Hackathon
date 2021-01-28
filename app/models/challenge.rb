@@ -1,9 +1,9 @@
 class Challenge < ApplicationRecord
   belongs_to :user
-  has_many :tagged_challenges
+  has_many :tagged_challenges, dependent: :destroy
 
   validates :title, presence: true, length: { minimum: 5 }
-  validates :description, presence: true, length: { minimum: 10, maximum: 1000 }
+  validates :description, presence: true, length: { in: 10..10_000 }
 
   def self.create_challenge_with_tags(challenge_params, user)
     transaction do

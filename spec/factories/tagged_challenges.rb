@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :tagged_challenge do
-    tag { nil }
-    challenge { nil }
+    tag { FactoryBot.create(:tag) }
+    challenge { FactoryBot.create(:challenge) }
   end
 end

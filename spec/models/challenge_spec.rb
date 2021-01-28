@@ -1,7 +1,8 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.describe Challenge, type: :model do
-  describe "Validations" do
+  describe 'Validations' do
     let(:challenge) { create(:challenge) }
 
     it 'should have a title' do
@@ -19,9 +20,20 @@ RSpec.describe Challenge, type: :model do
       challenge.description = Faker::Lorem.paragraph sentence_count: rand(2..5)
       expect(challenge.save).to eq(true)
     end
+
+    it 'should have description between 10 and 10000' do
+      challenge.description = Faker::Lorem.characters(number: 9)
+      expect(challenge.save).to eq(false)
+
+      challenge.description = Faker::Lorem.characters(number: 10_001)
+      expect(challenge.save).to eq(false)
+
+      challenge.description = Faker::Lorem.characters(number: rand(10..10_000))
+      expect(challenge.save).to eq(true)
+    end
   end
 
-  describe "Associations" do
+  describe 'Associations' do
     let(:challenge) { build(:challenge) }
 
     it 'should belongs to a user' do
