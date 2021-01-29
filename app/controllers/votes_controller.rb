@@ -5,10 +5,11 @@ class VotesController < ApplicationController
   before_action :authenticate_user!, only: :vote
 
   def vote
-    result = VoteService::Upvote.new(params.merge(user: current_user)).call
-    respond_with do |format|
-      format.html { redirect_to challenges_path }
-      format.json { { success: result.success? } }
+    result = VoteServices::Upvote.new(params.merge(user: current_user)).call
+    if result.success?
+      redirect_to challenges_path
+    else
+      redirect_to challenges_path, alert: result.errors[:message]
     end
   end
 

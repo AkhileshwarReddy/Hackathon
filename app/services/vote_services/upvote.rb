@@ -1,4 +1,4 @@
-module VoteService
+module VoteServices
   include BaseService
 
   class Upvote
@@ -9,12 +9,18 @@ module VoteService
     end
 
     def call
-      @vote = Vote.new(challenge: @challenge, user: @user)
-      raise StandardError unless @vote.save
-    rescue StandardError => e
-      BaseService::Failure.new({ message: e.message })
-    else
-      BaseService::Success.new({})
+      if Vote.exists?(challenge: @challenge, user: @user)
+        BaseService::Failure.new({ message: "You've voted this challenge already" })
+      else
+        begin
+          @vote = Vote.new(challenge: @challenge, user: @user)
+          raise StandardError unless @vote.save
+        rescue StandardError => e
+          BaseService::Failure.new({ message: e.message })
+        else
+          BaseService::Success.new({})
+        end
+      end
     end
 
     private

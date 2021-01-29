@@ -5,7 +5,7 @@
 <table class="table">
   <thead>
     <tr>
-      <th class="is-uppercase">Ch. No</th>
+      <th class="is-uppercase">No</th>
       <th class="is-uppercase">Challenge</th>
       <th class="is-uppercase">Votes</th>
       <th class="is-uppercase">Created By</th>
@@ -46,9 +46,25 @@
         <td>-</td>
         <% end %>
 
-        <td>-</td>
+        <td>
+          <% challenge_collaborators(challenge).each do |collaborator| %>
+            <%= "E#{ collaborator.id }" %>
+          <% end %>
+        </td>
 
         <td><%= time_ago_in_words(challenge.created_at) %></td>
+
+        <td>
+          <% if user_signed_in? and is_a_collaborator?(challenge, current_user) %>
+          <%= link_to collaborate_path(id: challenge.id) do %>
+            <i class="fas fa-user-minus"></i>
+          <% end %>
+          <% else %>
+            <%= link_to collaborate_path(id: challenge.id) do %>
+              <i class="fas fa-user-plus"></i>
+            <% end %>
+          <% end %>
+        </td>
       </tr>
   <% end %>
   </tbody>

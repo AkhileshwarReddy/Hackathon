@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   get 'search', to: 'tags#search'
 
   get 'vote', to: 'votes#vote'
+  get 'collaborate', to: 'collaborations#collaborate'
 end

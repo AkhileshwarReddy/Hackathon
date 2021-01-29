@@ -10,4 +10,5 @@ class User < ApplicationRecord
 
   has_many :challenges, dependent: :destroy
   has_many :votes, dependent: :destroy
+  has_many :collaborations, dependent: :destroy
 end
