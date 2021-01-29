@@ -26,9 +26,15 @@
         <td>
           <div>
             <span><%= challenge_votes(challenge) %></span>&nbsp;
-            <%= link_to vote_path(id: challenge.id) do %>
-              <i class="fas fa-chevron-circle-up is-primary"></i>
-            <%end %>
+            <% if user_signed_in? and has_voted?(challenge, current_user) %>
+              <%= link_to vote_path(id: challenge.id, how: 'down') do %>
+                <i class="fas fa-chevron-circle-down is-primary"></i>
+              <%end %>
+            <% else %>
+              <%= link_to vote_path(id: challenge.id) do %>
+                <i class="fas fa-chevron-circle-up is-primary"></i>
+              <%end %>
+            <% end %>
           </div>
         </td>
 
@@ -56,7 +62,7 @@
 
         <td>
           <% if user_signed_in? and is_a_collaborator?(challenge, current_user) %>
-          <%= link_to collaborate_path(id: challenge.id) do %>
+          <%= link_to collaborate_path(id: challenge.id, how: 'remove') do %>
             <i class="fas fa-user-minus"></i>
           <% end %>
           <% else %>

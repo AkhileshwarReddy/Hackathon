@@ -1,6 +1,6 @@
-require_relative '../services/challenge_services/create_challenge'
-
 class ChallengesController < ApplicationController
+  include ChallengeServices
+
   before_action :authenticate_user!, only: %i[new create]
   respond_to :js, :json, :html
 
@@ -18,7 +18,7 @@ class ChallengesController < ApplicationController
   end
 
   def create
-    result = ChallengeServices::CreateChallenge.new(set_challenge_params.merge(user: current_user)).call
+    result = CreateChallenge.new(set_challenge_params.merge(user: current_user)).call
 
     if result.success?
       respond_with do |format|

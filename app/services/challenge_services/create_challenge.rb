@@ -1,10 +1,6 @@
-require_relative '../base_service'
-
 module ChallengeServices
-  include BaseService
-
   class CreateChallenge
-    attr_reader :params, :tags, :raw_tags
+    include BaseService
 
     def initialize(params)
       @params = params.except(:tags)
@@ -18,14 +14,16 @@ module ChallengeServices
       create_tags
       create_tagged_challenges
     rescue ActiveRecord::RecordInvalid => e
-      BaseService::Failure.new({ message: e.message })
+      Failure.new({ message: e.message })
     rescue StandardError => e
-      BaseService::Failure.new({ message: e.message })
+      Failure.new({ message: e.message })
     else
-      BaseService::Success.new({ id: @challenge.id })
+      Success.new({ id: @challenge.id })
     end
 
     private
+
+    attr_reader :params, :tags, :raw_tags
 
     def create_tags
       @tags = @raw_tags.map { |tag| Tag.find_or_create_by(name: tag) }

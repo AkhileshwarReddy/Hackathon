@@ -1,7 +1,7 @@
 module CollaborationServices
-  include BaseService
-
   class AddCollaborator
+    include BaseService
+
     def initialize(params)
       @challenge = Challenge.find(params[:id])
       @user = params[:user]
@@ -9,15 +9,15 @@ module CollaborationServices
 
     def call
       if Collaboration.exists?(user: @user, challenge: @challenge)
-        BaseService::Failure.new({ message: 'You are already a collaborator to that challenge' })
+        Failure.new({ message: 'You are already a collaborator to that challenge' })
       else
         begin
           collaboration = Collaboration.new(challenge: @challenge, user: @user)
           raise ActiveRecord::ActiveRecordError unless collaboration.save
         rescue StandardError => e
-          BaseService::Failure.new({ message: e.message })
+          Failure.new({ message: e.message })
         else
-          BaseService::Success.new({})
+          Success.new({})
         end
       end
     end

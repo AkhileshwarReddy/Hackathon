@@ -9,7 +9,7 @@ RSpec.describe 'Votes', type: :request do
 
     it 'should vote a challenge' do
       sign_in user
-      get vote_path(id: challenge.id)
+      get vote_path(id: challenge.id, how: 'up')
       expect(challenge_votes(challenge)).to eq(1)
     end
   end

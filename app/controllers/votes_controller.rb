@@ -1,11 +1,15 @@
-require_relative '../services/vote_services/upvote'
-
 class VotesController < ApplicationController
-  respond_to :js, :json, :html
+  include VoteServices
+
   before_action :authenticate_user!, only: :vote
 
   def vote
-    result = VoteServices::Upvote.new(params.merge(user: current_user)).call
+    result = if params[:how] == 'down'
+               Downvote.new(set_vote_params.merge(user: current_user)).call
+             else
+               Upvote.new(set_vote_params.merge(user: current_user)).call
+             end
+
     if result.success?
       redirect_to challenges_path
     else
