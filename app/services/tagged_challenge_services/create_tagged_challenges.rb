@@ -4,8 +4,6 @@ module TaggedChallengeServices
   include BaseService
 
   class CreateTaggedChallenges
-    attr_reader :tags, :challenge
-
     def initialize(params)
       @tags = params[:tags]
       @challenge = params[:challenge]
@@ -18,5 +16,9 @@ module TaggedChallengeServices
     else
       BaseService::Success.new({})
     end
+
+    private
+
+    attr_reader :tags, :challenge
   end
 end

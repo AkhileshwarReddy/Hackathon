@@ -19,9 +19,18 @@
       <tr>
         <th><%= index + 1 %></th>
 
-        <td class="has-text-weight-semibold"><%= challenge.title %></td>
+        <td class="has-text-weight-semibold">
+          <p><%= challenge.title %></p>
+        </td>
 
-        <td>-</td>
+        <td>
+          <div>
+            <span><%= challenge_votes(challenge) %></span>&nbsp;
+            <%= link_to vote_path(id: challenge.id) do %>
+              <i class="fas fa-chevron-circle-up is-primary"></i>
+            <%end %>
+          </div>
+        </td>
 
         <td><%= challenge.user.username %></td>
 
