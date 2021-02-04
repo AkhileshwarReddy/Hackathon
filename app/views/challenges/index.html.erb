@@ -7,14 +7,26 @@
     <tr>
       <th class="is-uppercase">No</th>
       <th class="is-uppercase">Challenge</th>
-      <th class="is-uppercase">Votes</th>
+      <th class="is-uppercase">Votes&nbsp;
+        <span>
+          <%= link_to challenges_path(sort_by: "votes") do %>
+            <i class="fas fa-chevron-up"></i>
+          <% end %>
+        </span>
+      </th>
       <th class="is-uppercase">Created By</th>
       <th class="is-uppercase">Tags</th>
       <th class="is-uppercase">Collaborators</th>
-      <th class="is-uppercase">Created At</th>
+      <th class="is-uppercase">Created At&nbsp;
+        <span>
+          <%= link_to challenges_path(sort_by: "created_at") do %>
+            <i class="fas fa-chevron-up"></i>
+          <% end %>
+        </span>
+      </th>
     </tr>
   </thead>
-  <tbody>
+  <tbody data-challenges="<%= @challenges.to_json %>">
   <% @challenges.each_with_index do |challenge, index| %>
       <tr>
         <th><%= index + 1 %></th>
@@ -25,8 +37,8 @@
 
         <td>
           <div>
-            <span><%= challenge_votes(challenge) %></span>&nbsp;
-            <% if user_signed_in? and has_voted?(challenge, current_user) %>
+            <span><%= challenge.votes.count %></span>&nbsp;
+            <% if user_signed_in? and voted?(challenge.id, current_user.id) %>
               <%= link_to vote_path(id: challenge.id, how: 'down') do %>
                 <i class="fas fa-chevron-circle-down is-primary"></i>
               <%end %>
@@ -40,10 +52,10 @@
 
         <td><%= challenge.user.username %></td>
 
-        <% if challenge_tags(challenge).count > 0 %>
+        <% if challenge_tags(challenge.id).count > 0 %>
         <td>
           <div class="tags">
-            <% challenge_tags(challenge).each do |tag| %>
+            <% challenge_tags(challenge.id).each do |tag| %>
               <span class="tag is-primary"><%= tag.name %></span>
             <% end %>
           </div>
@@ -53,15 +65,15 @@
         <% end %>
 
         <td>
-          <% challenge_collaborators(challenge).each do |collaborator| %>
+          <% challenge_collaborators(challenge.id).each do |collaborator| %>
             <%= "E#{ collaborator.id }" %>
           <% end %>
         </td>
 
-        <td><%= time_ago_in_words(challenge.created_at) %></td>
+        <td class="has-text-centered"><%= time_ago_in_words(challenge.created_at) %></td>
 
         <td>
-          <% if user_signed_in? and is_a_collaborator?(challenge, current_user) %>
+          <% if user_signed_in? and is_a_collaborator?(challenge.id, current_user.id) %>
           <%= link_to collaborate_path(id: challenge.id, how: 'remove') do %>
             <i class="fas fa-user-minus"></i>
           <% end %>
@@ -75,3 +87,11 @@
   <% end %>
   </tbody>
 </table>
+<div class="is-center">
+  <div class="is-size-6 pb-2">
+    <%= page_entries_info @challenges, { entry_name: 'challenge' } %>
+  </div>
+  <div class="pagination is-centered">
+    <%= will_paginate @challenges, renderer: BulmaPagination::Rails %>
+  </div>
+</div>

@@ -2,5 +2,5 @@ class TaggedChallenge < ApplicationRecord
   belongs_to :tag
   belongs_to :challenge
 
-  scope :tags, ->(challenge) { where(challenge: challenge).map(&:tag) }
+  scope :tags, ->(id) { where(challenge_id: id).map(&:tag) }
 end

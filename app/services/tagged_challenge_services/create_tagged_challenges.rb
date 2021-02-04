@@ -13,7 +13,7 @@ module TaggedChallengeServices
     rescue StandardError => e
       Failure.new({ message: e.message })
     else
-      Success.new({})
+      Success.new({ message: 'Challenge is tagged' })
     end
 
     private

@@ -19,7 +19,7 @@ module VoteServices
         rescue StandardError => e
           Failure.new({ message: e.message })
         else
-          Success.new({})
+          Success.new({ message: 'Your vote has been added to the challenge.' })
         end
       end
     end

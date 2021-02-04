@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.describe 'Challenges', type: :request do
@@ -18,22 +19,31 @@ RSpec.describe 'Challenges', type: :request do
 
   describe 'POST /challenge', type: :request do
     let(:user) { create(:user) }
-
-    before do
-      sign_in user
-    end
-
-    it 'should redirect to challenges after creating a post' do
-      params = {
+    let(:params) do
+      {
         challenge: {
           title: Faker::Lorem.sentence,
           description: Faker::Lorem.sentences(number: rand(5..20)).join(' '),
           tags: [Faker::ProgrammingLanguage.name, Faker::ProgrammingLanguage.name].join(', ')
         }
       }
+    end
 
+    before do
+      sign_in user
+    end
+
+    it 'should redirect to challenges after creating a post' do
       post challenge_path, params: params
       expect(response).to redirect_to(challenges_path)
+    end
+
+    it 'should return failure status with invalid data' do
+      headers = { 'ACCEPT' => 'application/json' }
+      params[:challenge].delete(:title)
+      post challenge_path, params: params, headers: headers
+      result = JSON.parse(response.body).symbolize_keys
+      expect(result[:success]).to be(false)
     end
   end
 

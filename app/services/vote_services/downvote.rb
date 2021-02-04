@@ -8,11 +8,13 @@ module VoteServices
     end
 
     def call
+      raise StandardError if @user.nil? || @challenge.nil?
+
       Vote.where(challenge: @challenge, user: @user).destroy_all
     rescue StandardError => e
       Failure.new({ message: e.message })
     else
-      Success.new({})
+      Success.new({ message: 'Your vote has been removed for the challenge successfully.' })
     end
 
     private

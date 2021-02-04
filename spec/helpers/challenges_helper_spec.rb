@@ -1,21 +1,35 @@
 require 'rails_helper'
 
-# Specs in this file have access to a helper object that includes
-# the ChallengesHelper. For example:
-#
-# describe ChallengesHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
 RSpec.describe ChallengesHelper, type: :helper do
   describe '#challenge_tags' do
     let(:tagged_challenge) { create(:tagged_challenge) }
 
     it 'should return challenge tags' do
-      expect(challenge_tags(tagged_challenge.challenge).first).to eq(tagged_challenge.tag)
+      expect(challenge_tags(tagged_challenge.challenge_id).first).to eq(tagged_challenge.tag)
+    end
+  end
+
+  describe '#challenge_collaborators' do
+    let(:collaboration) { create(:collaboration) }
+
+    it 'should return collaborator' do
+      expect(challenge_collaborators(collaboration.challenge_id)).to eq([collaboration.user])
+    end
+  end
+
+  describe '#is_a_collaborator?' do
+    let(:collaboration) { create(:collaboration) }
+
+    it 'should return true' do
+      expect(is_a_collaborator?(collaboration.challenge_id, collaboration.user_id)).to eq(true)
+    end
+  end
+
+  describe '#voted?' do
+    let(:vote) { create(:vote) }
+
+    it 'should return true' do
+      expect(voted?(vote.challenge_id, vote.user_id)).to eq(true)
     end
   end
 end

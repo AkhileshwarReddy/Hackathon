@@ -8,11 +8,12 @@ module BaseService
   end
 
   class Success < Status
-    attr_accessor :data
+    attr_accessor :data, :message
 
     def initialize(params)
       @success = true
-      @data = params
+      @data = params[:data]
+      @message = params[:message]
     end
   end
 

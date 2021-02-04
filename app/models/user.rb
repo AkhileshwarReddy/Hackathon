@@ -5,8 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :username, presence: true, length: { minimum: 3 }
-  validates :first_name, presence: true, length: { minimum: 3 }
-  validates :last_name, presence: true, length: { minimum: 3 }
+  validates :first_name, presence: true, length: { minimum: 2 }
+  validates :last_name, presence: true, length: { minimum: 2 }
 
   has_many :challenges, dependent: :destroy
   has_many :votes, dependent: :destroy

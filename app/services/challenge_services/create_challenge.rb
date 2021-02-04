@@ -18,7 +18,7 @@ module ChallengeServices
     rescue StandardError => e
       Failure.new({ message: e.message })
     else
-      Success.new({ id: @challenge.id })
+      Success.new({ data: { id: @challenge.id }, message: 'Challenge created successfully.' })
     end
 
     private

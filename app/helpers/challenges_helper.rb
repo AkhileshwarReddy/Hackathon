@@ -1,21 +1,17 @@
 module ChallengesHelper
-  def challenge_tags(challenge)
-    TaggedChallenge.tags(challenge)
+  def challenge_tags(challenge_id)
+    TaggedChallenge.tags(challenge_id)
   end
 
-  def challenge_votes(challenge)
-    Challenge.vote_count(challenge)
+  def challenge_collaborators(challenge_id)
+    Challenge.collaborators(challenge_id)
   end
 
-  def challenge_collaborators(challenge)
-    Challenge.collaborators(challenge)
+  def is_a_collaborator?(challenge_id, user_id)
+    Challenge.collaborators(challenge_id).any? { |collaborator| collaborator.id == user_id }
   end
 
-  def is_a_collaborator?(challenge, user)
-    Challenge.collaborators(challenge).any? { |collaborator| collaborator.id == user.id }
-  end
-
-  def has_voted?(challenge, user)
-    challenge.votes.any? { |vote| vote.user == user }
+  def voted?(challenge_id, user_id)
+    Challenge.find(challenge_id).votes.any? { |vote| vote.user.id == user_id }
   end
 end

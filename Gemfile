@@ -30,6 +30,9 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 gem 'devise', '~> 4.7', '>= 4.7.3'
 
+gem 'will_paginate', '~> 3.3'
+gem 'will_paginate-bulma', '~> 1.0'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

@@ -5,13 +5,13 @@ class VotesController < ApplicationController
 
   def vote
     result = if params[:how] == 'down'
-               Downvote.new(set_vote_params.merge(user: current_user)).call
+               Downvote.new(vote_params.merge(user: current_user)).call
              else
-               Upvote.new(set_vote_params.merge(user: current_user)).call
+               Upvote.new(vote_params.merge(user: current_user)).call
              end
 
     if result.success?
-      redirect_to challenges_path
+      redirect_to challenges_path, notice: result.message
     else
       redirect_to challenges_path, alert: result.errors[:message]
     end
@@ -19,7 +19,7 @@ class VotesController < ApplicationController
 
   private
 
-  def set_vote_params
+  def vote_params
     params.permit(:id, :how)
   end
 end
