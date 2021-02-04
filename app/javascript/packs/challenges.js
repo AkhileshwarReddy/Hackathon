@@ -47,7 +47,7 @@ const removeTag = (event) => event.target.parentNode.remove()
 const setInputValue = (value) => document.querySelector("#challenge_tags").value += `${value}, `
 const clearTagSearch = () => document.getElementById("tags-search").value = ""
 
-window.onload = () => $("#tags-search").easyAutocomplete(options)
+$("#tags-search").easyAutocomplete(options)
 document.getElementById("challenge_form").onkeypress = (event) => {
     if(event.keyCode == 13) {
         event.preventDefault()

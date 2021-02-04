@@ -28,7 +28,7 @@ class ChallengesController < ApplicationController
     else
       respond_with do |format|
         format.json { render json: result.to_json }
-        format.html { redirect_to :new, alert: result.errors[:message] }
+        format.html { render :new, alert: result.errors[:message] }
       end
     end
   end

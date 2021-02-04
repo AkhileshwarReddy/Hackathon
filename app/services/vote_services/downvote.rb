@@ -10,6 +10,8 @@ module VoteServices
     def call
       raise StandardError if @user.nil? || @challenge.nil?
 
+      return Failure.new({ message: 'You cannot vote your own challenge.' }) if @challenge.user == @user
+
       Vote.where(challenge: @challenge, user: @user).destroy_all
     rescue StandardError => e
       Failure.new({ message: e.message })

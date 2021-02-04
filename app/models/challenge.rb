@@ -1,5 +1,4 @@
 class Challenge < ApplicationRecord
-  self.per_page = 5
   belongs_to :user
   has_many :tagged_challenges, dependent: :destroy
   has_many :votes, dependent: :destroy

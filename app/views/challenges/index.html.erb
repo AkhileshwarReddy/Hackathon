@@ -32,13 +32,15 @@
         <th><%= index + 1 %></th>
 
         <td class="has-text-weight-semibold">
-          <p><%= challenge.title %></p>
+          <p><%= link_to challenge.title, root_path, class: 'is-link' %></p>
         </td>
 
         <td>
           <div>
             <span><%= challenge.votes.count %></span>&nbsp;
-            <% if user_signed_in? and voted?(challenge.id, current_user.id) %>
+            <% if user_signed_in? and challenge.user_id == current_user.id %>
+              <i class="fas fa-chevron-circle-up is-mute"></i>
+            <% elsif user_signed_in? and voted?(challenge.id, current_user.id) %>
               <%= link_to vote_path(id: challenge.id, how: 'down') do %>
                 <i class="fas fa-chevron-circle-down is-primary"></i>
               <%end %>
@@ -73,7 +75,9 @@
         <td class="has-text-centered"><%= time_ago_in_words(challenge.created_at) %></td>
 
         <td>
-          <% if user_signed_in? and is_a_collaborator?(challenge.id, current_user.id) %>
+          <% if user_signed_in? and challenge.user_id == current_user.id %>
+            <i class="fas fa-user-plus is-mute"></i>
+          <% elsif user_signed_in? and is_a_collaborator?(challenge.id, current_user.id) %>
           <%= link_to collaborate_path(id: challenge.id, how: 'remove') do %>
             <i class="fas fa-user-minus"></i>
           <% end %>

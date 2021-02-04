@@ -8,6 +8,10 @@ module CollaborationServices
     end
 
     def call
+      if Challenge.find(@challenge_id).user_id == @user.id
+        return Failure.new({ message: 'You cannot collaborate to your own challenge.' })
+      end
+
       if Collaboration.exists?(user: @user, challenge_id: @challenge_id)
         Failure.new({ message: 'You are already a collaborator to that challenge' })
       else

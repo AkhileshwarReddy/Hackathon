@@ -56,19 +56,19 @@
   </nav>
 
   <% if notice or alert %>
-  <section class="message is-primary">
-    <div class="message-body">
-      <% if notice %>
-      <div class="is-primary">
-        <%= notice %>
+    <% if notice %>
+    <section class="message is-primary">
+      <div class="message-body">
+          <%= notice %>
       </div>
-      <% else %>
-      <div class="is-danger">
-        <p><%= alert %></p>
-      </div>
-      <% end %>
-    </div>
-  </section>
+    </section>
+    <% else %>
+      <section class="message is-danger">
+        <div class="message-body">
+            <%= alert %>
+        </div>
+      </section>
+    <% end %>
   <% end %>
 
   <div class="container">

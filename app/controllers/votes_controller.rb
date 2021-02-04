@@ -1,5 +1,6 @@
 class VotesController < ApplicationController
   include VoteServices
+  respond_to :js, :json, :html
 
   before_action :authenticate_user!, only: :vote
 
@@ -11,9 +12,15 @@ class VotesController < ApplicationController
              end
 
     if result.success?
-      redirect_to challenges_path, notice: result.message
+      respond_with do |format|
+        format.json { render json: result.to_json }
+        format.html { redirect_to challenges_path, notice: result.message }
+      end
     else
-      redirect_to challenges_path, alert: result.errors[:message]
+      respond_with do |format|
+        format.json { render json: result.to_json }
+        format.html { redirect_to challenges_path, alert: result.errors[:message] }
+      end
     end
   end
 

@@ -20,7 +20,7 @@ class CollaborationsController < ApplicationController
     else
       respond_with do |format|
         format.json { render json: result.to_json }
-        format.html { redirect_to challenges_path, notice: result.errors[:message] }
+        format.html { redirect_to challenges_path, alert: result.errors[:message] }
       end
     end
   end

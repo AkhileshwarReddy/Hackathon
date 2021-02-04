@@ -10,6 +10,8 @@ module VoteServices
     end
 
     def call
+      return Failure.new({ message: 'You cannot vote your own challenge.' }) if @challenge.user.id == @user.id
+
       if Vote.exists?(challenge: @challenge, user: @user)
         Failure.new({ message: "You've voted this challenge already" })
       else

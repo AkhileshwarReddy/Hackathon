@@ -10,6 +10,10 @@ module CollaborationServices
     def call
       raise StandardError if @user.nil? || @challenge_id.nil?
 
+      if Challenge.find(@challenge_id).user_id == @user.id
+        return Failure.new({ message: 'You cannot collaborate to your own challenge.' })
+      end
+
       @challenge = Challenge.find(@challenge_id)
       Collaboration.where(challenge: @challenge, user: @user).destroy_all
     rescue StandardError => e
