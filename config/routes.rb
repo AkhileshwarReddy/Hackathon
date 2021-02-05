@@ -9,4 +9,6 @@ Rails.application.routes.draw do
 
   get 'vote', to: 'votes#vote'
   get 'collaborate', to: 'collaborations#collaborate'
+
+  get 'show', to: 'challenges#show'
 end

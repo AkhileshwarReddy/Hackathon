@@ -16,7 +16,7 @@
       </th>
       <th class="is-uppercase">Created By</th>
       <th class="is-uppercase">Tags</th>
-      <th class="is-uppercase">Collaborators</th>
+      <th class="is-uppercase">Collaborations</th>
       <th class="is-uppercase">Created At&nbsp;
         <span>
           <%= link_to challenges_path(sort_by: "created_at") do %>
@@ -32,10 +32,10 @@
         <th><%= index + 1 %></th>
 
         <td class="has-text-weight-semibold">
-          <p><%= link_to challenge.title, root_path, class: 'is-link' %></p>
+          <p><%= link_to challenge.title, show_path(id: challenge.id), class: 'is-link' %></p>
         </td>
 
-        <td>
+        <td class="has-text-centered">
           <div>
             <span><%= challenge.votes.count %></span>&nbsp;
             <% if user_signed_in? and challenge.user_id == current_user.id %>
@@ -66,10 +66,11 @@
         <td>-</td>
         <% end %>
 
-        <td>
-          <% challenge_collaborators(challenge.id).each do |collaborator| %>
-            <%= "E#{ collaborator.id }" %>
-          <% end %>
+        <td class="has-text-centered">
+          <%# challenge_collaborators(challenge.id).each do |collaborator| %>
+            <%#= "E#{ collaborator.id }" %>
+          <%# end %>
+          <%= challenge.collaborations.count %>
         </td>
 
         <td class="has-text-centered"><%= time_ago_in_words(challenge.created_at) %></td>

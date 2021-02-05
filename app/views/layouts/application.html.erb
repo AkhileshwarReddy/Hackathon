@@ -30,16 +30,6 @@
             <%= link_to "#{ current_user.first_name } #{ current_user.last_name }", edit_user_registration_path, class: "navbar-link" %>
 
             <div class="navbar-dropdown">
-              <a class="navbar-item">
-                My Challenges
-              </a>
-              <a class="navbar-item">
-                My Collaborations
-              </a>
-              <a class="navbar-item">
-                My Votes
-              </a>
-              <hr class="navbar-divider">
               <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "navbar-item" %>
             </div>
         <% else %>

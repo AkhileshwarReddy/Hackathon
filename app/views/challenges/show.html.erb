@@ -1,0 +1,39 @@
+<div class="columns is-centered">
+<div class="column is-two-thirds">
+  <div class="box is-vcentered">
+    <div class="columns">
+      <div class="column is-two-thirds">
+        <p class="is-size-4 has-text-weight-bold"><%= @challenge.title %></p>
+      </div>
+      <div class="column">
+        <p class="is-size-6 is-pulled-right has-text-weight-bold">Votes: <%= @challenge.votes.count %></p>
+      </div>
+    </div>
+    <div class="tags">
+      <% challenge_tags(@challenge.id).each do |tag| %>
+        <span class="tag is-primary"><%= tag.name %></span>
+      <% end %>
+    </div>
+  </div>
+  <div class="box">
+    <p class="is-size-5 has-text-weight-bold">Description</p><hr>
+    <p class="content">
+      <%= @challenge.description %>
+    </p>
+  </div>
+
+  <% if @challenge.collaborations.count > 0 %>
+  <div class="box">
+    <p class="is-size-5 has-text-weight-bold">Collaborators</p><hr>
+    <div class="is-size-6">
+      <p>
+        <% challenge_collaborators(@challenge.id).each_with_index do |collaborator, index| %>
+          <%= "#{index+1}. #{collaborator.first_name} #{collaborator.last_name}" %><br>
+        <% end %>
+      </p>
+    </div>
+  </div>
+  <% end %>
+
+</div>
+</div>

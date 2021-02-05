@@ -33,6 +33,10 @@ class ChallengesController < ApplicationController
     end
   end
 
+  def show
+    @challenge = Challenge.find(params[:id])
+  end
+
   private
 
   def challenge_params
